@@ -48,7 +48,7 @@ for epoch in range(trainEpochs):
 duration=time()-startTime
 print("Train Finished takes:",duration)   
 
-
+#the loss about epoch
 %matplotlib inline
 import matplotlib.pyplot as plt
 fig=plt.gcf()
@@ -58,6 +58,7 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['loss'], loc='upper left') 
 
+#the accuracy about epoch
 plt.plot(epoch_list, accuracy_list,label="accuracy" )
 fig = plt.gcf()
 fig.set_size_inches(10,5)
@@ -67,12 +68,14 @@ plt.xlabel('epoch')
 plt.legend()
 plt.show()
 
+#test model in test datasets of mnist 
 len(mnist.test.images)
 print("Accuracy:",sess.run(accuracy,feed_dict={x:mnist.test.images,y_label:mnist.test.labels}))
 
 prediction_result=sess.run(tf.argmax(y_predict,1),feed_dict={x:mnist.test.images[:50],y_label:mnist.test.labels})
 print(prediction_result[:20])
 
+#result show in photoes
 import numpy as np
 def show_images_labels_predict(images,labels,prediction_result):
     fig=plt.gcf()
@@ -83,13 +86,14 @@ def show_images_labels_predict(images,labels,prediction_result):
         ax.set_title("label=" +str(np.argmax(labels[i]))+
                      ",predict="+str(prediction_result[i])
                      ,fontsize=9)
-    plt.show()
-    
+    plt.show()   
 show_images_labels_predict(mnist.test.images,mnist.test.labels,prediction_result)
 
+#save the model
 saver=tf.train.Saver()
 save_path=saver.save(sess,"saveModel/CNN_model1")
 print("Model saved in file: %s" % save_path)
 
+#export to tensorboard
 merged=tf.summary.merge_all()
 train_writer=tf.summary.FileWriter('log/CNN',sess.graph)
