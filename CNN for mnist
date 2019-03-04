@@ -1,3 +1,8 @@
+'''
+from book 'Tensorflow+Keras 深度学习人工智能实践应用'
+TensorFlow
+MNIST数据集，卷积神经网络
+'''
 import tensorflow as tf
 import tensorflow.examples.tutorials.mnist.input_data as input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
